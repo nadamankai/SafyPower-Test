@@ -1,13 +1,15 @@
+import 'package:fintech_dashboard_clone/widgets/switch_botton.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+
+import 'package:fintech_dashboard_clone/layout/profile_layout.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:google_fonts/google_fonts.dart';
+import 'package:fintech_dashboard_clone/widgets/profile_widgets/profile_information.dart';
+import 'package:fintech_dashboard_clone/widgets/profile_widgets/profile_invoices.dart';
+import 'package:fintech_dashboard_clone/widgets/profile_widgets/profile_payment_cards.dart';
 import 'package:fintech_dashboard_clone/widgets/profile_widgets/profile_billing_informations.dart';
 import 'package:fintech_dashboard_clone/widgets/profile_widgets/profile_feedbacks.dart';
-import 'package:fintech_dashboard_clone/widgets/profile_widgets/profile_invoices.dart';
-import 'package:fintech_dashboard_clone/widgets/profile_widgets/profile_information.dart';
-import 'package:fintech_dashboard_clone/widgets/switch_botton.dart';
-import 'package:fintech_dashboard_clone/layout/profile_layout.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({Key? key}) : super(key: key);
@@ -20,23 +22,237 @@ class _ProfileScreenState extends State<ProfileScreen> {
   @override
   Widget build(BuildContext context) {
     final screenHeight = MediaQuery.of(context).size.height;
+    final textScaleFactor = MediaQuery.of(context).textScaleFactor;
     final maxWidth = MediaQuery.of(context).size.width;
     final isMobile = maxWidth < 1000;
-    final paddingValue = isMobile ? 0.0 : 10.0;
-    final marginValue = isMobile ? 0.0 : 15.0;
 
     return Scaffold(
       body: SafeArea(
         child: ProfileLayout(
           content: Padding(
-            padding: EdgeInsets.all(paddingValue),
+            padding: isMobile
+                ? const EdgeInsets.all(0)
+                : const EdgeInsets.fromLTRB(10, 20, 0, 0),
             child: SingleChildScrollView(
               child: Padding(
-                padding: EdgeInsets.only(right: isMobile ? 0.0 : 30.0),
+                padding: isMobile
+                    ? const EdgeInsets.only(right: 0)
+                    : EdgeInsets.only(right: 30),
                 child: Column(
                   children: [
-                    _buildProfileHeader(isMobile, screenHeight),
-                    _buildProfileContent(isMobile, marginValue),
+                    Container(
+                      width: double.infinity,
+                      height: isMobile
+                          ? screenHeight / 4.8647
+                          : screenHeight / 3.8647,
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 20, vertical: 20),
+                      decoration: BoxDecoration(
+                        color: const Color(0xffA1DAFF),
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          if (!isMobile)
+                            Expanded(
+                              child: Text(
+                                'Profile',
+                                style: GoogleFonts.inter(
+                                  fontWeight: FontWeight.w700,
+                                  fontSize: 24,
+                                ),
+                              ),
+                            ),
+                          Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Container(
+                                width: isMobile ? 150 : 250,
+                                padding:
+                                const EdgeInsets.symmetric(horizontal: 15),
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(20),
+                                  color: Colors.white,
+                                ),
+                                child: const TextField(
+                                  decoration: InputDecoration(
+                                    fillColor: Colors.white,
+                                    hintText: "Type here...",
+                                    hintStyle: TextStyle(
+                                      fontSize: 16,
+                                    ),
+                                    icon: Icon(CupertinoIcons.search),
+                                    border: InputBorder.none,
+                                  ),
+                                ),
+                              ),
+                              SizedBox(
+                                width: isMobile ? 0 : 20,
+                              ),
+                              if (!isMobile)
+                                IconButton(
+                                  onPressed: () {
+                                    _showSettingsDialog(context);
+                                  },
+                                  icon: SvgPicture.asset(
+                                    'assets/svg/settings.svg',
+                                    width: 50,
+                                    colorFilter: const ColorFilter.mode(
+                                        Colors.black, BlendMode.srcIn),
+                                  ),
+                                ),
+                              const SizedBox(
+                                width: 30,
+                              ),
+                              if (!isMobile)
+                                Stack(
+                                  children: [
+                                    IconButton(
+                                      onPressed: () {
+                                        _showNotificationsDialog(context);
+                                      },
+                                      icon: SvgPicture.asset(
+                                        'assets/svg/notif.svg',
+                                        width: 50,
+                                        colorFilter: const ColorFilter.mode(
+                                            Colors.black, BlendMode.srcIn),
+                                      ),
+                                    ),
+                                    Positioned(
+                                      right: 0,
+                                      bottom: 0,
+                                      child: Container(
+                                        width: 10,
+                                        height: 10,
+                                        decoration: const BoxDecoration(
+                                          shape: BoxShape.circle,
+                                          color: Colors.red,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              if (isMobile)
+                                const Row(
+                                  children: [
+                                    Text('Emily Smith'),
+                                    Icon(Icons.keyboard_arrow_down),
+                                  ],
+                                ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                    Transform.translate(
+                      offset: const Offset(0, -70),
+                      child: Container(
+                        margin: isMobile
+                            ? const EdgeInsets.fromLTRB(0, 0, 0, 0)
+                            : const EdgeInsets.fromLTRB(15, 10, 15, 10),
+                        padding: const EdgeInsets.all(20),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                          color: Colors.transparent,
+                        ),
+                        child: !isMobile
+                            ? Column(
+                          mainAxisSize: MainAxisSize.max,
+                          children: [
+                            Row(
+                              children: [
+                                const ProfileInformation(
+                                  name: 'Emily Smith',
+                                  email: 'emilysmith@example.com',
+                                ),
+                                const SizedBox(
+                                  width: 20,
+                                ),
+                                ProfileInvoices(
+                                  invoices: invoices,
+                                ),
+                              ],
+                            ),
+                            const SizedBox(
+                              height: 25,
+                            ),
+
+                            Row(
+                              children: [
+                                Expanded(
+                                  flex: 6,
+                                  child: Column(
+                                    children: [
+                                      ProfilePaymentCards(),
+                                      const SizedBox(height: 20),
+                                      ProfileBillingInformations(),
+                                    ],
+                                  ),
+                                ),
+                                const SizedBox(width: 20),
+                                Expanded(
+                                  flex: 4,
+                                  child: ProfileFeedbacks(),
+                                ),
+                              ],
+                            )
+
+                            // Other widgets
+                          ],
+                        )
+                            : Column(
+                          //mobile side************************************
+                          mainAxisSize: MainAxisSize.max,
+                          children: [
+                            Container(
+                              height: 170,
+                              width: double.infinity,
+                              child: const ProfileInformation(
+                                name: 'Emily Smith',
+                                email: 'emilysmith@example.com',
+                              ),
+                            ),
+                            const SizedBox(
+                              height: 25,
+                            ),
+                            Container(
+                              height: 250,
+                              width: double.infinity,
+                              child: ProfileInvoices(
+                                invoices: invoices,
+                              ),
+                            ),
+
+                            const SizedBox(
+                              height: 25,
+                            ),
+
+                            Container(
+                              height: 200,
+                              width: double.infinity,
+                              child: ProfilePaymentCards(),
+                            ),
+                            const SizedBox(height: 20),
+
+                            Container(
+                              height: 250,
+                              width: double.infinity,
+                              child: ProfileBillingInformations(),
+                            ),
+
+                            const SizedBox(height: 20),
+                            Container(
+                              height: 250,
+                              width: double.infinity,
+                              child: ProfileFeedbacks(),
+                            ),
+
+                            // Other widgets
+                          ],
+                        ),
+                      ),
+                    ),
                   ],
                 ),
               ),
@@ -47,185 +263,33 @@ class _ProfileScreenState extends State<ProfileScreen> {
     );
   }
 
-  Widget _buildProfileHeader(bool isMobile, double screenHeight) {
-    return Container(
-      width: double.infinity,
-      height: isMobile ? screenHeight / 4.8647 : screenHeight / 3.8647,
-      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-      decoration: BoxDecoration(
-        color: const Color(0xffA1DAFF),
-        borderRadius: BorderRadius.circular(10),
-      ),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          if (!isMobile)
-            Expanded(
-              child: Text(
-                'Profile',
-                style: GoogleFonts.inter(
-                  fontWeight: FontWeight.w700,
-                  fontSize: 24,
-                ),
-              ),
-            ),
-          _buildSearchAndActions(isMobile),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildSearchAndActions(bool isMobile) {
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        _buildSearchBar(isMobile),
-        if (!isMobile) ...[
-          const SizedBox(width: 20),
-          _buildSettingsButton(),
-          const SizedBox(width: 30),
-          _buildNotificationButton(),
-        ],
-        if (isMobile)
-          const Row(
-            children: [
-              Text('Emily Smith'),
-              Icon(Icons.keyboard_arrow_down),
-            ],
-          ),
-      ],
-    );
-  }
-
-  Widget _buildSearchBar(bool isMobile) {
-    return Container(
-      width: isMobile ? 150 : 250,
-      padding: const EdgeInsets.symmetric(horizontal: 15),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(20),
-        color: Colors.white,
-      ),
-      child: const TextField(
-        decoration: InputDecoration(
-          fillColor: Colors.white,
-          hintText: "Type here...",
-          hintStyle: TextStyle(fontSize: 16),
-          icon: Icon(CupertinoIcons.search),
-          border: InputBorder.none,
-        ),
-      ),
-    );
-  }
-
-  Widget _buildSettingsButton() {
-    return IconButton(
-      onPressed: () {
-        _showSettingsDialog(context);
-      },
-      icon: SvgPicture.asset(
-        'assets/svg/settings.svg',
-        width: 50,
-        colorFilter: const ColorFilter.mode(Colors.black, BlendMode.srcIn),
-      ),
-    );
-  }
-
-  Widget _buildNotificationButton() {
-    return Stack(
-      children: [
-        IconButton(
-          onPressed: () {
-            _showNotificationsDialog(context);
-          },
-          icon: SvgPicture.asset(
-            'assets/svg/notif.svg',
-            width: 50,
-            colorFilter: const ColorFilter.mode(Colors.black, BlendMode.srcIn),
-          ),
-        ),
-        Positioned(
-          right: 0,
-          bottom: 0,
-          child: Container(
-            width: 10,
-            height: 10,
-            decoration: const BoxDecoration(
-              shape: BoxShape.circle,
-              color: Colors.red,
-            ),
-          ),
-        ),
-      ],
-    );
-  }
-
-  Widget _buildProfileContent(bool isMobile, double marginValue) {
-    return Transform.translate(
-      offset: const Offset(0, -70),
-      child: Container(
-        margin: EdgeInsets.symmetric(horizontal: marginValue),
-        padding: const EdgeInsets.all(20),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(10),
-          color: Colors.transparent,
-        ),
-        child: isMobile ? _buildMobileContent() : _buildDesktopContent(),
-      ),
-    );
-  }
-
-  Widget _buildDesktopContent() {
-    return Column(
-      mainAxisSize: MainAxisSize.max,
-      children: [
-        Row(
-          children: [
-            const ProfileInformation(
-              name: 'Emily Smith',
-              email: 'emilysmith@example.com',
-            ),
-            const SizedBox(width: 20),
-            ProfileInvoices(invoices: invoices),
-          ],
-        ),
-        const SizedBox(height: 25),
-        // Other widgets
-      ],
-    );
-  }
-
-  Widget _buildMobileContent() {
-    return Column(
-      mainAxisSize: MainAxisSize.max,
-      children: [
-        Container(
-          height: 170,
-          width: double.infinity,
-          child: const ProfileInformation(
-            name: 'Emily Smith',
-            email: 'emilysmith@example.com',
-          ),
-        ),
-        const SizedBox(height: 25),
-        Container(
-          height: 250,
-          width: double.infinity,
-          child: ProfileInvoices(invoices: invoices),
-        ),
-        // Other widgets
-      ],
-    );
-  }
-
   List<Map<String, String>> invoices = [
-    {'date': 'Mar, 10, 2023', 'number': '#MS-30776', 'amount': '\$250,000'},
-    {'date': 'Feb, 20, 2023', 'number': '#MS-30775', 'amount': '\$150,000'},
-    {'date': 'Jan, 15, 2023', 'number': '#MS-30774', 'amount': '\$100,000'},
-    {'date': 'Feb, 23, 2023', 'number': '#MS-32821', 'amount': '\$200,000'},
-    {'date': 'Jui, 07, 2023', 'number': '#MS-34123', 'amount': '\$210,000'},
+    {
+      'date': 'Mar, 10, 2023',
+      'number': '#MS-30776',
+      'amount': '\$250,000',
+    },
+    {
+      'date': 'Feb, 20, 2023',
+      'number': '#MS-30775',
+      'amount': '\$150,000',
+    },
+    {
+      'date': 'Jan, 15, 2023',
+      'number': '#MS-30774',
+      'amount': '\$100,000',
+    },
+    {
+      'date': 'Feb, 23, 2023',
+      'number': '#MS-32821',
+      'amount': '\$200,000',
+    },
+    {
+      'date': 'Jui, 07, 2023',
+      'number': '#MS-34123',
+      'amount': '\$210,000',
+    },
   ];
-
-
 }
 
 //******************************************************** */
@@ -237,9 +301,9 @@ class Comment {
 
   Comment(
       {required this.author,
-      required this.comment,
-      required this.number,
-      this.isReplyVisible = false});
+        required this.comment,
+        required this.number,
+        this.isReplyVisible = false});
 }
 
 class MyWidget extends StatefulWidget {
@@ -252,15 +316,15 @@ class _MyWidgetState extends State<MyWidget> {
     Comment(
         author: 'amyrobson',
         comment:
-            'Impressive! Though it seems the drag feature could be improved. But overall it looks incredible. You’ve nailed the design and the responsiveness at various breakpoints works really well.', number: 12),
+        'Impressive! Though it seems the drag feature could be improved. But overall it looks incredible. You’ve nailed the design and the responsiveness at various breakpoints works really well.', number: 12),
     Comment(
         author: 'amyrobson',
         comment:
-            'Impressive! Though it seems the drag feature could be improved. But overall it looks incredible. You’ve nailed the design and the responsiveness at various breakpoints works really well.', number: 12),
+        'Impressive! Though it seems the drag feature could be improved. But overall it looks incredible. You’ve nailed the design and the responsiveness at various breakpoints works really well.', number: 12),
     Comment(
         author: 'amyrobson',
         comment:
-            'Woah, your project looks awesome! How long have you been coding for? I’m still new, but think I want to dive into React as well soon. Perhaps you can give me an insight on where I can learn React? Thanks!', number: 12),
+        'Woah, your project looks awesome! How long have you been coding for? I’m still new, but think I want to dive into React as well soon. Perhaps you can give me an insight on where I can learn React? Thanks!', number: 12),
 
     // Autres commentaires...
   ];
@@ -408,7 +472,7 @@ class _MyWidgetState extends State<MyWidget> {
                                       fontWeight: FontWeight.w500,
                                       fontSize: isMobile ? 12 : 14,
                                       color:
-                                          const Color.fromRGBO(83, 87, 182, 1),
+                                      const Color.fromRGBO(83, 87, 182, 1),
                                     ),
                                   ),
                                 ),
@@ -442,7 +506,7 @@ class _MyWidgetState extends State<MyWidget> {
                                   decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(20),
                                     color:
-                                        const Color.fromRGBO(245, 246, 250, 1),
+                                    const Color.fromRGBO(245, 246, 250, 1),
                                   ),
                                   width: 80,
                                   height: 40,
@@ -451,7 +515,7 @@ class _MyWidgetState extends State<MyWidget> {
                                       : const EdgeInsets.only(right: 24),
                                   child: Row(
                                     mainAxisAlignment:
-                                        MainAxisAlignment.spaceEvenly,
+                                    MainAxisAlignment.spaceEvenly,
                                     children: [
                                       TextButton(
                                         onPressed: () {
@@ -483,7 +547,7 @@ class _MyWidgetState extends State<MyWidget> {
                                       Container(
                                         decoration: BoxDecoration(
                                             borderRadius:
-                                                BorderRadius.circular(20)),
+                                            BorderRadius.circular(20)),
                                         child: TextButton(
                                           onPressed: () {
                                             // Logic for the "-" button
@@ -521,7 +585,7 @@ class _MyWidgetState extends State<MyWidget> {
                                       fontWeight: FontWeight.w500,
                                       fontSize: 14,
                                       color:
-                                          const Color.fromRGBO(83, 87, 182, 1),
+                                      const Color.fromRGBO(83, 87, 182, 1),
                                     ),
                                   ),
                                 ),
@@ -572,7 +636,7 @@ class _MyWidgetState extends State<MyWidget> {
                         },
                         style: ElevatedButton.styleFrom(
                           backgroundColor:
-                              const Color(0xFF5357B6), // Background color
+                          const Color(0xFF5357B6), // Background color
                           foregroundColor: Colors.white, // Text color
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(10),
@@ -644,17 +708,17 @@ void _showNotificationsDialog(BuildContext context) {
               ),
               Container(
                 height:
-                    isMobile ? MediaQuery.of(context).size.height * 0.75 : 480,
+                isMobile ? MediaQuery.of(context).size.height * 0.75 : 480,
                 padding: isMobile
                     ? const EdgeInsets.only(
-                        left: 10, right: 0, top: 10, bottom: 10)
+                    left: 10, right: 0, top: 10, bottom: 10)
                     : const EdgeInsets.only(
-                        left: 45, right: 0, top: 35, bottom: 35),
+                    left: 45, right: 0, top: 35, bottom: 35),
                 margin: isMobile
                     ? const EdgeInsets.only(
-                        left: 10, right: 10, top: 20, bottom: 0)
+                    left: 10, right: 10, top: 20, bottom: 0)
                     : const EdgeInsets.only(
-                        left: 70, right: 70, top: 35, bottom: 0),
+                    left: 70, right: 70, top: 35, bottom: 0),
                 decoration: BoxDecoration(
                   color: const Color.fromRGBO(242, 246, 254, 1),
                   borderRadius: BorderRadius.circular(20),
@@ -712,14 +776,14 @@ void _showSettingsDialog(BuildContext context) {
                     : 480,
                 padding: isMobile
                     ? const EdgeInsets.only(
-                        left: 10, right: 0, top: 10, bottom: 10)
+                    left: 10, right: 0, top: 10, bottom: 10)
                     : const EdgeInsets.only(
-                        left: 45, right: 0, top: 35, bottom: 35),
+                    left: 45, right: 0, top: 35, bottom: 35),
                 margin: isMobile
                     ? const EdgeInsets.only(
-                        left: 10, right: 10, top: 20, bottom: 0)
+                    left: 10, right: 10, top: 20, bottom: 0)
                     : const EdgeInsets.only(
-                        left: 70, right: 70, top: 35, bottom: 0),
+                    left: 70, right: 70, top: 35, bottom: 0),
                 decoration: BoxDecoration(
                   color: const Color.fromRGBO(242, 246, 254, 1),
                   borderRadius: BorderRadius.circular(20),
