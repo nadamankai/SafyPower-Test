@@ -13,7 +13,7 @@ class AppLayout extends StatelessWidget {
     return Responsive(
       mobile: Column(
         children: [
-          const TopAppBar(),
+          const TopAppBar(title: 'safyPower',),
           Expanded(
             child: Padding(
               padding: const EdgeInsets.all(10.0),
@@ -39,7 +39,7 @@ class AppLayout extends StatelessWidget {
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  const SizedBox(height: 140, child: TopAppBar()),
+                  const SizedBox(height: 140, child: TopAppBar(title: '',)),
                   Expanded(child: content),
                 ],
               ),
