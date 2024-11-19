@@ -470,10 +470,10 @@
       "languageVersion": "2.15"
     }
   ],
-  "generated": "2024-11-16T15:43:01.029081Z",
+  "generated": "2024-11-18T22:20:04.704786Z",
   "generator": "pub",
-  "generatorVersion": "3.5.2",
+  "generatorVersion": "3.5.4",
   "flutterRoot": "file:///C:/tools/flutter",
-  "flutterVersion": "3.24.2",
+  "flutterVersion": "3.24.5",
   "pubCache": "file:///C:/Users/nadam/AppData/Local/Pub/Cache"
 }

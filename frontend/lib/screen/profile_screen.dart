@@ -22,240 +22,209 @@ class _ProfileScreenState extends State<ProfileScreen> {
   @override
   Widget build(BuildContext context) {
     final screenHeight = MediaQuery.of(context).size.height;
-    final textScaleFactor = MediaQuery.of(context).textScaleFactor;
     final maxWidth = MediaQuery.of(context).size.width;
     final isMobile = maxWidth < 1000;
 
     return Scaffold(
       body: SafeArea(
         child: ProfileLayout(
-          content: Padding(
+          content: SingleChildScrollView(
             padding: isMobile
                 ? const EdgeInsets.all(0)
                 : const EdgeInsets.fromLTRB(10, 20, 0, 0),
-            child: SingleChildScrollView(
-              child: Padding(
-                padding: isMobile
-                    ? const EdgeInsets.only(right: 0)
-                    : EdgeInsets.only(right: 30),
-                child: Column(
-                  children: [
-                    Container(
-                      width: double.infinity,
-                      height: isMobile
-                          ? screenHeight / 4.8647
-                          : screenHeight / 3.8647,
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 20, vertical: 20),
-                      decoration: BoxDecoration(
-                        color: const Color(0xffA1DAFF),
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
+            child: Column(
+              children: [
+                // Header Section
+                Container(
+                  width: double.infinity,
+                  height: screenHeight / 4.5,
+                  padding: const EdgeInsets.all(20),
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      colors: [Color(0xffA1DAFF), Color(0xff80B9FF)],
+                      begin: Alignment.topLeft,
+                      end: Alignment.bottomRight,
+                    ),
+                    borderRadius: BorderRadius.circular(15),
+                  ),
+                  child: Column(
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           if (!isMobile)
-                            Expanded(
-                              child: Text(
-                                'Profile',
-                                style: GoogleFonts.inter(
-                                  fontWeight: FontWeight.w700,
-                                  fontSize: 24,
-                                ),
+                            Text(
+                              'Mon Profil',
+                              style: GoogleFonts.inter(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 24,
+                                color: Colors.white,
                               ),
                             ),
                           Row(
-                            crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
-                              Container(
-                                width: isMobile ? 150 : 250,
-                                padding:
-                                const EdgeInsets.symmetric(horizontal: 15),
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(20),
+                              IconButton(
+                                onPressed: () {
+                                  _showNotificationsDialog(context);
+                                },
+                                icon: Icon(
+                                  Icons.notifications,
+                                  size: isMobile ? 24 : 30,
                                   color: Colors.white,
                                 ),
-                                child: const TextField(
-                                  decoration: InputDecoration(
-                                    fillColor: Colors.white,
-                                    hintText: "Type here...",
-                                    hintStyle: TextStyle(
-                                      fontSize: 16,
-                                    ),
-                                    icon: Icon(CupertinoIcons.search),
-                                    border: InputBorder.none,
-                                  ),
+                              ),
+                              IconButton(
+                                onPressed: () {
+                                  _showSettingsDialog(context);
+                                },
+                                icon: Icon(
+                                  Icons.settings,
+                                  size: isMobile ? 24 : 30,
+                                  color: Colors.white,
                                 ),
                               ),
-                              SizedBox(
-                                width: isMobile ? 0 : 20,
-                              ),
-                              if (!isMobile)
-                                IconButton(
-                                  onPressed: () {
-                                    _showSettingsDialog(context);
-                                  },
-                                  icon: SvgPicture.asset(
-                                    'assets/svg/settings.svg',
-                                    width: 50,
-                                    colorFilter: const ColorFilter.mode(
-                                        Colors.black, BlendMode.srcIn),
-                                  ),
+                            ],
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 20),
+                      // Search Bar
+                      Container(
+                        padding: const EdgeInsets.symmetric(horizontal: 15),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(20),
+                          color: Colors.white,
+                        ),
+                        child: const TextField(
+                          decoration: InputDecoration(
+                            hintText: "Rechercher...",
+                            hintStyle: TextStyle(fontSize: 16),
+                            icon: Icon(CupertinoIcons.search),
+                            border: InputBorder.none,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+
+                const SizedBox(height: 20),
+
+                // Profile Information Section (Integrated)
+                const ProfileInformation(
+                  name: 'Emily Smith',
+                  email: 'emilysmith@example.com',
+                ),
+
+                const SizedBox(height: 20),
+
+                // Invoices Section
+                Container(
+                  width: double.infinity,
+                  padding: const EdgeInsets.all(20),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(10),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withOpacity(0.1),
+                        blurRadius: 8,
+                        spreadRadius: 4,
+                      ),
+                    ],
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Invoices',
+                        style: GoogleFonts.inter(
+                          fontWeight: FontWeight.w700,
+                          fontSize: 20,
+                          color: Colors.black,
+                        ),
+                      ),
+                      const SizedBox(height: 15),
+                      ListView.builder(
+                        itemCount: invoices.length,
+                        shrinkWrap: true,
+                        physics: NeverScrollableScrollPhysics(),
+                        itemBuilder: (context, index) {
+                          final invoice = invoices[index];
+                          return Container(
+                            margin: const EdgeInsets.only(bottom: 15),
+                            padding: const EdgeInsets.all(15),
+                            decoration: BoxDecoration(
+                              color: Colors.blue[50],
+                              borderRadius: BorderRadius.circular(12),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.black.withOpacity(0.05),
+                                  spreadRadius: 2,
+                                  blurRadius: 6,
                                 ),
-                              const SizedBox(
-                                width: 30,
-                              ),
-                              if (!isMobile)
-                                Stack(
+                              ],
+                            ),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    IconButton(
-                                      onPressed: () {
-                                        _showNotificationsDialog(context);
-                                      },
-                                      icon: SvgPicture.asset(
-                                        'assets/svg/notif.svg',
-                                        width: 50,
-                                        colorFilter: const ColorFilter.mode(
-                                            Colors.black, BlendMode.srcIn),
+                                    Text(
+                                      invoice['date']!,
+                                      style: GoogleFonts.inter(
+                                        fontWeight: FontWeight.w600,
+                                        fontSize: 16,
+                                        color: Colors.blueAccent,
                                       ),
                                     ),
-                                    Positioned(
-                                      right: 0,
-                                      bottom: 0,
-                                      child: Container(
-                                        width: 10,
-                                        height: 10,
-                                        decoration: const BoxDecoration(
-                                          shape: BoxShape.circle,
-                                          color: Colors.red,
+                                    const SizedBox(height: 5),
+                                    Text(
+                                      invoice['number']!,
+                                      style: GoogleFonts.inter(
+                                        fontWeight: FontWeight.w400,
+                                        fontSize: 14,
+                                        color: Colors.black,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.end,
+                                  children: [
+                                    Text(
+                                      invoice['amount']!,
+                                      style: GoogleFonts.inter(
+                                        fontWeight: FontWeight.w600,
+                                        fontSize: 16,
+                                        color: Colors.green,
+                                      ),
+                                    ),
+                                    const SizedBox(height: 5),
+                                    TextButton.icon(
+                                      onPressed: () {},
+                                      icon: Icon(Icons.picture_as_pdf, size: 16),
+                                      label: Text(
+                                        'View PDF',
+                                        style: GoogleFonts.inter(
+                                          fontWeight: FontWeight.w600,
+                                          fontSize: 12,
+                                          color: Colors.blueAccent,
                                         ),
                                       ),
                                     ),
                                   ],
                                 ),
-                              if (isMobile)
-                                const Row(
-                                  children: [
-                                    Text('Emily Smith'),
-                                    Icon(Icons.keyboard_arrow_down),
-                                  ],
-                                ),
-                            ],
-                          ),
-                        ],
-                      ),
-                    ),
-                    Transform.translate(
-                      offset: const Offset(0, -70),
-                      child: Container(
-                        margin: isMobile
-                            ? const EdgeInsets.fromLTRB(0, 0, 0, 0)
-                            : const EdgeInsets.fromLTRB(15, 10, 15, 10),
-                        padding: const EdgeInsets.all(20),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10),
-                          color: Colors.transparent,
-                        ),
-                        child: !isMobile
-                            ? Column(
-                          mainAxisSize: MainAxisSize.max,
-                          children: [
-                            Row(
-                              children: [
-                                const ProfileInformation(
-                                  name: 'Emily Smith',
-                                  email: 'emilysmith@example.com',
-                                ),
-                                const SizedBox(
-                                  width: 20,
-                                ),
-                                ProfileInvoices(
-                                  invoices: invoices,
-                                ),
                               ],
                             ),
-                            const SizedBox(
-                              height: 25,
-                            ),
-
-                            Row(
-                              children: [
-                                Expanded(
-                                  flex: 6,
-                                  child: Column(
-                                    children: [
-                                      ProfilePaymentCards(),
-                                      const SizedBox(height: 20),
-                                      ProfileBillingInformations(),
-                                    ],
-                                  ),
-                                ),
-                                const SizedBox(width: 20),
-                                Expanded(
-                                  flex: 4,
-                                  child: ProfileFeedbacks(),
-                                ),
-                              ],
-                            )
-
-                            // Other widgets
-                          ],
-                        )
-                            : Column(
-                          //mobile side************************************
-                          mainAxisSize: MainAxisSize.max,
-                          children: [
-                            Container(
-                              height: 170,
-                              width: double.infinity,
-                              child: const ProfileInformation(
-                                name: 'Emily Smith',
-                                email: 'emilysmith@example.com',
-                              ),
-                            ),
-                            const SizedBox(
-                              height: 25,
-                            ),
-                            Container(
-                              height: 250,
-                              width: double.infinity,
-                              child: ProfileInvoices(
-                                invoices: invoices,
-                              ),
-                            ),
-
-                            const SizedBox(
-                              height: 25,
-                            ),
-
-                            Container(
-                              height: 200,
-                              width: double.infinity,
-                              child: ProfilePaymentCards(),
-                            ),
-                            const SizedBox(height: 20),
-
-                            Container(
-                              height: 250,
-                              width: double.infinity,
-                              child: ProfileBillingInformations(),
-                            ),
-
-                            const SizedBox(height: 20),
-                            Container(
-                              height: 250,
-                              width: double.infinity,
-                              child: ProfileFeedbacks(),
-                            ),
-
-                            // Other widgets
-                          ],
-                        ),
+                          );
+                        },
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
-              ),
+              ],
             ),
           ),
         ),
@@ -293,6 +262,20 @@ class _ProfileScreenState extends State<ProfileScreen> {
 }
 
 //******************************************************** */
+
+List<Comment> comments = [
+  Comment(
+    author: 'amyrobson',
+    comment: 'Impressive! The design and responsiveness are well done!',
+    number: 12,
+  ),
+  Comment(
+    author: 'maxblagun',
+    comment: 'Woah, your project looks awesome! How long have you been coding?',
+    number: 8,
+  ),
+];
+
 class Comment {
   String author;
   String comment;
@@ -733,8 +716,11 @@ void _showNotificationsDialog(BuildContext context) {
   );
 }
 
-
-void _showSettingsDialog(BuildContext context) {
+void _showCustomDialog({
+  required BuildContext context,
+  required String title,
+  required Widget childContent,
+}) {
   final isMobile = MediaQuery.of(context).size.width < 600;
 
   showDialog(
@@ -755,35 +741,31 @@ void _showSettingsDialog(BuildContext context) {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
+              // Close Button
               Container(
                 alignment: Alignment.centerRight,
                 margin: isMobile
                     ? const EdgeInsets.only(right: 15)
                     : const EdgeInsets.only(right: 35, top: 15),
                 child: IconButton(
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                  },
+                  onPressed: () => Navigator.of(context).pop(),
                   icon: Icon(
                     Icons.close_rounded,
                     size: isMobile ? 40 : 60,
                   ),
                 ),
               ),
+              // Dialog Content
               Container(
                 height: isMobile
                     ? MediaQuery.of(context).size.height * 0.75
                     : 480,
                 padding: isMobile
-                    ? const EdgeInsets.only(
-                    left: 10, right: 0, top: 10, bottom: 10)
-                    : const EdgeInsets.only(
-                    left: 45, right: 0, top: 35, bottom: 35),
+                    ? const EdgeInsets.symmetric(horizontal: 10, vertical: 10)
+                    : const EdgeInsets.symmetric(horizontal: 45, vertical: 35),
                 margin: isMobile
-                    ? const EdgeInsets.only(
-                    left: 10, right: 10, top: 20, bottom: 0)
-                    : const EdgeInsets.only(
-                    left: 70, right: 70, top: 35, bottom: 0),
+                    ? const EdgeInsets.symmetric(horizontal: 10, vertical: 20)
+                    : const EdgeInsets.symmetric(horizontal: 70, vertical: 35),
                 decoration: BoxDecoration(
                   color: const Color.fromRGBO(242, 246, 254, 1),
                   borderRadius: BorderRadius.circular(20),
@@ -791,83 +773,19 @@ void _showSettingsDialog(BuildContext context) {
                 child: SingleChildScrollView(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisSize: MainAxisSize.min,
                     children: [
-                      Text(
-                        'Settings',
-                        style: GoogleFonts.inter(
-                          fontWeight: FontWeight.bold,
-                          fontSize: isMobile ? 18 : 24,
-                          height: 1.21,
+                      if (title.isNotEmpty)
+                        Padding(
+                          padding: const EdgeInsets.only(bottom: 16),
+                          child: Text(
+                            title,
+                            style: GoogleFonts.inter(
+                              fontWeight: FontWeight.bold,
+                              fontSize: isMobile ? 18 : 24,
+                            ),
+                          ),
                         ),
-                      ),
-
-                      const SizedBox(height: 17),
-                      Row(
-                        children: [
-                          CustomSwitch(
-                            value: true,
-                            onChanged: (bool value) {},
-                          ),
-                          SizedBox(width: isMobile ? 20 : 50),
-                          Flexible(
-                            child: Text(
-                              'Receiving notifications immediately.',
-                              style: GoogleFonts.inter(
-                                fontWeight: FontWeight.w400,
-                                fontSize: isMobile ? 14 : 16,
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(height: 28),
-                      Row(
-                        children: [
-                          CustomSwitch(
-                            value: false,
-                            onChanged: (bool value) {},
-                          ),
-                          SizedBox(width: isMobile ? 20 : 50),
-                          Flexible(
-                            child: Text(
-                              'Email me when my account is accessed from a new device.',
-                              style: GoogleFonts.inter(
-                                fontWeight: FontWeight.w400,
-                                fontSize: isMobile ? 14 : 16,
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-
-                      const SizedBox(height: 28),
-                      _buildSettingsOption(
-                        context,
-                        icon: Icons.lock,
-                        text: 'Change Password',
-                        onTap: () {
-                          // Add change password functionality here
-                        },
-                      ),
-                      const SizedBox(height: 28),
-                      _buildSettingsOption(
-                        context,
-                        icon: Icons.delete_forever,
-                        text: 'Deactivate Account',
-                        onTap: () {
-                          // Add deactivate account functionality here
-                        },
-                      ),
-                      const SizedBox(height: 28),
-                      _buildSettingsOption(
-                        context,
-                        icon: Icons.language,
-                        text: 'Change Language',
-                        onTap: () {
-                          // Add change language functionality here
-                        },
-                      ),
+                      childContent,
                     ],
                   ),
                 ),
@@ -880,8 +798,86 @@ void _showSettingsDialog(BuildContext context) {
   );
 }
 
-Widget _buildSettingsOption(BuildContext context,
-    {required IconData icon, required String text, required Function() onTap}) {
+
+void _showSettingsDialog(BuildContext context) {
+  final isMobile = MediaQuery.of(context).size.width < 600;
+
+  _showCustomDialog(
+    context: context,
+    title: 'Settings',
+    childContent: Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        // Toggle Options
+        _buildSettingsRow(
+          isMobile: isMobile,
+          label: 'Receiving notifications immediately.',
+          value: true,
+          onChanged: (value) {},
+        ),
+        const SizedBox(height: 28),
+        _buildSettingsRow(
+          isMobile: isMobile,
+          label: 'Email me when my account is accessed from a new device.',
+          value: false,
+          onChanged: (value) {},
+        ),
+        const SizedBox(height: 28),
+        // Additional Options
+        _buildSettingsOption(
+          context,
+          icon: Icons.lock,
+          text: 'Change Password',
+          onTap: () {},
+        ),
+        const SizedBox(height: 28),
+        _buildSettingsOption(
+          context,
+          icon: Icons.delete_forever,
+          text: 'Deactivate Account',
+          onTap: () {},
+        ),
+        const SizedBox(height: 28),
+        _buildSettingsOption(
+          context,
+          icon: Icons.language,
+          text: 'Change Language',
+          onTap: () {},
+        ),
+      ],
+    ),
+  );
+}
+
+Widget _buildSettingsRow({
+  required bool isMobile,
+  required String label,
+  required bool value,
+  required ValueChanged<bool> onChanged,
+}) {
+  return Row(
+    children: [
+      CustomSwitch(value: value, onChanged: onChanged),
+      SizedBox(width: isMobile ? 20 : 50),
+      Flexible(
+        child: Text(
+          label,
+          style: GoogleFonts.inter(
+            fontWeight: FontWeight.w400,
+            fontSize: isMobile ? 14 : 16,
+          ),
+        ),
+      ),
+    ],
+  );
+}
+
+Widget _buildSettingsOption(
+    BuildContext context, {
+      required IconData icon,
+      required String text,
+      required Function() onTap,
+    }) {
   final isMobile = MediaQuery.of(context).size.width < 600;
 
   return GestureDetector(

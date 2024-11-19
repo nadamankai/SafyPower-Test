@@ -10,8 +10,7 @@ class ProfileInvoices extends StatelessWidget {
     this.invoices = const [],
   }) : super(key: key);
 
-
-
+  // Dialog to show all invoices
   void _showAllInvoicesDialog(BuildContext context) {
     showDialog(
       context: context,
@@ -24,23 +23,28 @@ class ProfileInvoices extends StatelessWidget {
             borderRadius: BorderRadius.circular(20),
           ),
           child: Container(
-            width: isMobile ? MediaQuery.of(context).size.width * 0.8 : 1100,
+            width: isMobile ? MediaQuery.of(context).size.width * 0.85 : 1100,
             height: isMobile ? 500 : 650,
-
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(20),
               color: Colors.white,
-              border: Border.all(color: Colors.black),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black.withOpacity(0.15),
+                  spreadRadius: 1,
+                  blurRadius: 12,
+                  offset: const Offset(0, 6),
+                ),
+              ],
             ),
             child: Column(
-
               mainAxisSize: MainAxisSize.min,
               children: [
                 Container(
                   alignment: Alignment.centerRight,
                   margin: isMobile
                       ? const EdgeInsets.only(right: 15)
-                      : const EdgeInsets.only(right: 35, top:15),
+                      : const EdgeInsets.only(right: 35, top: 15),
                   child: IconButton(
                     onPressed: () {
                       Navigator.of(context).pop();
@@ -56,7 +60,7 @@ class ProfileInvoices extends StatelessWidget {
                   style: GoogleFonts.inter(
                     fontWeight: FontWeight.w700,
                     fontSize: isMobile ? 20 : 24,
-                    color: const Color.fromRGBO(0, 0, 0, 1),
+                    color: Colors.blueAccent,
                   ),
                 ),
                 const SizedBox(height: 15),
@@ -77,15 +81,28 @@ class ProfileInvoices extends StatelessWidget {
     );
   }
 
+  // Builds an individual invoice item
   Widget buildInvoiceItem(Map<String, String> invoice, BuildContext context) {
     final maxWidth = MediaQuery.of(context).size.width;
     final isMobile = maxWidth < 600;
 
     return Container(
       padding: isMobile
-          ? const EdgeInsets.only(right: 10)
-          : const EdgeInsets.only(right: 20, left: 20),
-      margin: const EdgeInsets.only(bottom: 20),
+          ? const EdgeInsets.only(right: 10, left: 10)
+          : const EdgeInsets.symmetric(horizontal: 20),
+      margin: const EdgeInsets.only(bottom: 15),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(20),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.1),
+            spreadRadius: 3,
+            blurRadius: 10,
+            offset: const Offset(0, 4),
+          ),
+        ],
+      ),
       child: Row(
         children: [
           Column(
@@ -96,7 +113,7 @@ class ProfileInvoices extends StatelessWidget {
                 style: GoogleFonts.inter(
                   fontWeight: FontWeight.w700,
                   fontSize: isMobile ? 18 : 20,
-                  color: const Color.fromRGBO(0, 0, 0, 1),
+                  color: Colors.blueAccent,
                 ),
               ),
               const SizedBox(height: 7),
@@ -105,7 +122,7 @@ class ProfileInvoices extends StatelessWidget {
                 style: GoogleFonts.inter(
                   fontWeight: FontWeight.w400,
                   fontSize: isMobile ? 14 : 16,
-                  color: const Color.fromRGBO(0, 0, 0, 1),
+                  color: Colors.blueGrey,
                 ),
               ),
             ],
@@ -116,24 +133,32 @@ class ProfileInvoices extends StatelessWidget {
           Text(
             invoice['amount'] ?? '',
             style: GoogleFonts.inter(
-              fontWeight: FontWeight.w400,
+              fontWeight: FontWeight.w500,
               fontSize: isMobile ? 14 : 16,
-              color: const Color.fromRGBO(0, 0, 0, 1),
+              color: Colors.blue,
             ),
           ),
-          const SizedBox(width: 5),
+          const SizedBox(width: 8),
           TextButton.icon(
             onPressed: () {},
             icon: SvgPicture.asset(
               'assets/svg/pdf.svg',
-              width: 15,
+              width: 16,
+              color: Colors.blueAccent,
             ),
             label: Text(
               'PDF',
               style: GoogleFonts.inter(
                 fontWeight: FontWeight.w700,
                 fontSize: isMobile ? 14 : 16,
-                color: const Color.fromRGBO(0, 0, 0, 1),
+                color: Colors.blueAccent,
+              ),
+            ),
+            style: TextButton.styleFrom(
+              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+              backgroundColor: Colors.blue.withOpacity(0.1),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(12),
               ),
             ),
           ),
@@ -142,6 +167,7 @@ class ProfileInvoices extends StatelessWidget {
     );
   }
 
+  // Main Profile Invoices Widget
   @override
   Widget build(BuildContext context) {
     final maxWidth = MediaQuery.of(context).size.width;
@@ -152,10 +178,18 @@ class ProfileInvoices extends StatelessWidget {
         height: 200,
         padding: isMobile
             ? const EdgeInsets.only(left: 10, top: 10, right: 0, bottom: 10)
-            : const EdgeInsets.all(10),
+            : const EdgeInsets.all(15),
         decoration: BoxDecoration(
           color: Colors.white,
-          borderRadius: BorderRadius.circular(10),
+          borderRadius: BorderRadius.circular(20),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.1),
+              spreadRadius: 3,
+              blurRadius: 10,
+              offset: const Offset(0, 4),
+            ),
+          ],
         ),
         child: Column(
           children: [
@@ -166,12 +200,10 @@ class ProfileInvoices extends StatelessWidget {
                   style: GoogleFonts.inter(
                     fontWeight: FontWeight.w700,
                     fontSize: isMobile ? 20 : 24,
-                    color: const Color.fromRGBO(0, 0, 0, 1),
+                    color: Colors.blueAccent,
                   ),
                 ),
-                const Expanded(
-                  child: SizedBox(width: 1),
-                ),
+                const Expanded(child: SizedBox(width: 1)),
                 Container(
                   margin: isMobile
                       ? const EdgeInsets.only(right: 10)
@@ -183,7 +215,7 @@ class ProfileInvoices extends StatelessWidget {
                       style: GoogleFonts.inter(
                         fontWeight: FontWeight.w600,
                         fontSize: isMobile ? 14 : 16,
-                        color: const Color.fromRGBO(0, 0, 0, 1),
+                        color: Colors.blue,
                       ),
                     ),
                     style: OutlinedButton.styleFrom(
@@ -192,9 +224,9 @@ class ProfileInvoices extends StatelessWidget {
                           horizontal: 12, vertical: 10)
                           : const EdgeInsets.symmetric(
                           horizontal: 20, vertical: 15),
-                      side: const BorderSide(color: Colors.black),
+                      side: const BorderSide(color: Colors.blue),
                       shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(50),
+                        borderRadius: BorderRadius.circular(30),
                       ),
                     ),
                   ),

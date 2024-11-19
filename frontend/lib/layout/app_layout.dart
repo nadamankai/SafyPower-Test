@@ -13,11 +13,16 @@ class AppLayout extends StatelessWidget {
     return Responsive(
       mobile: Column(
         children: [
-          const TopAppBar(),
           Expanded(
+            flex: 5,
             child: Padding(
-              padding: const EdgeInsets.all(10.0),
-              child: content,
+              padding: const EdgeInsets.only(right: 10.0, bottom: 20.0),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Expanded(child: content),
+                ],
+              ),
             ),
           ),
           const NavigationPanel(
@@ -39,7 +44,6 @@ class AppLayout extends StatelessWidget {
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  const SizedBox(height: 100, child: TopAppBar()),
                   Expanded(child: content),
                 ],
               ),
