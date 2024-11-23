@@ -58,7 +58,7 @@ class LastUsersMap extends StatelessWidget {
                       ),
                       const SizedBox(height: 30),
                       Container(
-                        height:MediaQuery.of(context).size.height *0.45,
+                        height:MediaQuery.of(context).size.height *0.3,
                         width: MediaQuery.of(context).size.width * 0.36,
 
                         margin:const EdgeInsets.only(left: 20, right: 20),
@@ -91,7 +91,7 @@ class LastUsersMap extends StatelessWidget {
                     borderRadius: Styles.defaultBorderRadius,
                     color: Colors.white,
                   ),
-                  height: MediaQuery.of(context).size.height * 0.7,
+                  height: MediaQuery.of(context).size.height * 0.6,
                   width: double.infinity,
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.start,

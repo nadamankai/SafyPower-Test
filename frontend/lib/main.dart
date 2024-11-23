@@ -2,6 +2,7 @@ import 'package:fintech_dashboard_clone/layout/app_layout.dart';
 import 'package:fintech_dashboard_clone/screen/Login_Screen.dart';
 import 'package:fintech_dashboard_clone/screen/Signup_screen.dart';
 import 'package:fintech_dashboard_clone/sections/statistique_section/expense_income_chart.dart';
+import 'package:fintech_dashboard_clone/state/StationState.dart';
 import 'package:fintech_dashboard_clone/styles/styles.dart';
 import 'package:flutter/material.dart';
 import 'package:fintech_dashboard_clone/sections/statistique_section/statistics.dart';
@@ -10,9 +11,15 @@ import 'package:fintech_dashboard_clone/screen/profile_screen.dart';
 import 'package:fintech_dashboard_clone/screen/statistique_screen.dart';
 import 'package:fintech_dashboard_clone/screen/contact_us_screen.dart';
 import 'package:fintech_dashboard_clone/screen/ForgotPwd.dart';
+import 'package:provider/provider.dart';
 
 void main() {
-  runApp(const FintechDasboardApp());
+  runApp(
+    ChangeNotifierProvider(
+      create: (context) => StationsStates(),
+      child: const FintechDasboardApp(),
+    ),
+  );
 }
 
 class FintechDasboardApp extends StatelessWidget {
@@ -26,10 +33,7 @@ class FintechDasboardApp extends StatelessWidget {
         scaffoldBackgroundColor: Styles.scaffoldBackgroundColor,
         scrollbarTheme: Styles.scrollbarTheme,
       ),
-      //home: const ProfileScreen(),
-      //  home: const Forgotpwd(),
-       home: const LoginScreen(),
-      //  home: const SignupScreen(),
+      home: const LoginScreen(),
     );
   }
 }

@@ -6,8 +6,9 @@ import 'package:flutter/cupertino.dart';
 
 class AppLayout extends StatelessWidget {
   final Widget content;
+  final activeTab;
 
-  const AppLayout({Key? key, required this.content}) : super(key: key);
+  const AppLayout({Key? key, required this.content, this.activeTab}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Responsive(
@@ -25,17 +26,17 @@ class AppLayout extends StatelessWidget {
               ),
             ),
           ),
-          const NavigationPanel(
+          NavigationPanel(
             axis: Axis.horizontal,
-            activeTab: NavigationItems.users,
+            activeTab:activeTab,
           ),
         ],
       ),
       desktop: Row(
         children: [
-          const NavigationPanel(
+          NavigationPanel(
             axis: Axis.vertical,
-            activeTab: NavigationItems.users,
+            activeTab: activeTab,
           ),
           Expanded(
             flex: 5,

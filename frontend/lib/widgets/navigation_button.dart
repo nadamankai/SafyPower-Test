@@ -1,3 +1,4 @@
+import 'package:fintech_dashboard_clone/screen/settings_screen.dart';
 import 'package:fintech_dashboard_clone/styles/styles.dart';
 import 'package:flutter/material.dart';
 import 'package:fintech_dashboard_clone/screen/profile_screen.dart';
@@ -46,7 +47,12 @@ class NavigationButton extends StatelessWidget {
               context,
               MaterialPageRoute(builder: (context) => ContactUsScreen()),
             );
-          } else {
+          } else if (icon == Icons.power) {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => const SettingsScreen()),
+            );} else {
             // Exécuter l'action par défaut
             onPressed();
           }
@@ -60,3 +66,4 @@ class NavigationButton extends StatelessWidget {
     );
   }
 }
+
