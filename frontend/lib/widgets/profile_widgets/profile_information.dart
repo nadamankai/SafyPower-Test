@@ -136,7 +136,7 @@ class _ProfileInformationState extends State<ProfileInformation> with SingleTick
               ),
               label: Text(isEditing ? 'Save Changes' : 'Edit'),
               style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.blueAccent,
+                backgroundColor: Colors.white,
                 padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(12),

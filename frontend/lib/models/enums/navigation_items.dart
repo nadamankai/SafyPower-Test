@@ -4,6 +4,7 @@ enum NavigationItems {
   panel,
   users,
   contact,
+  settings
 }
 
 extension NavigationItemsExtensions on NavigationItems {
@@ -19,6 +20,8 @@ extension NavigationItemsExtensions on NavigationItems {
 
       case NavigationItems.contact:
         return Icons.chat_rounded;
+      case NavigationItems.settings:
+        return Icons.power;
     }
   }
 }

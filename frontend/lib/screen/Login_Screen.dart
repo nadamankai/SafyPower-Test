@@ -1,6 +1,7 @@
 import 'package:fintech_dashboard_clone/screen/ForgotPwd.dart';
 import 'package:fintech_dashboard_clone/screen/Signup_screen.dart';
 import 'package:fintech_dashboard_clone/screen/profile_screen.dart';
+import 'package:fintech_dashboard_clone/screen/statistique_screen.dart';
 import 'package:flutter/material.dart';
 import '../widgets/Switch_Remember.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -180,7 +181,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => const ProfileScreen(),
+                            builder: (context) => const Statistique(),
                           ),
                         );
                       }

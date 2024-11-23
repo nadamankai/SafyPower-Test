@@ -3,6 +3,8 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:fintech_dashboard_clone/layout/app_layout.dart';
 import 'package:fintech_dashboard_clone/layout/top_app_bar.dart';
 
+import '../models/enums/navigation_items.dart';
+
 class ContactUsScreen extends StatelessWidget {
   ContactUsScreen({Key? key}) : super(key: key);
 
@@ -18,6 +20,8 @@ class ContactUsScreen extends StatelessWidget {
     return Scaffold(
       body: SafeArea(
         child: AppLayout(
+          activeTab:  NavigationItems.contact,
+
           content: SingleChildScrollView(
             child: Column(
               children: [

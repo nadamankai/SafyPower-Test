@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 
 class NavigationPanel extends StatefulWidget {
   final Axis axis;
-  final NavigationItems activeTab; // Nouvelle propriété
+  final NavigationItems activeTab;
   const NavigationPanel({Key? key, required this.axis, required this.activeTab})
       : super(key: key);
 
@@ -19,7 +19,7 @@ class _NavigationPanelState extends State<NavigationPanel> {
   @override
   void initState() {
     super.initState();
-    activeTab = widget.activeTab.index; // Mettre à jour l'onglet actif initial
+    activeTab = widget.activeTab.index;
   }
 
   @override
