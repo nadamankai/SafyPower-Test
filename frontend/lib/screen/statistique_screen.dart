@@ -99,12 +99,12 @@ class _StatistiqueState extends State<Statistique> {
                           children: [
                             // First Tab: Locker Temperature Monitor, StationStats, SmokeAlarmStatus
                             SingleChildScrollView(
-                              padding: const EdgeInsets.all(16.0),
+                              padding: const EdgeInsets.all(7.0),
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.stretch,
                                 children: [
                                   SizedBox(
-                                    height: maxWidth < 500 ? MediaQuery.of(context).size.height * 0.4 : MediaQuery.of(context).size.height * 0.5,
+                                    height: maxWidth < 500 ? MediaQuery.of(context).size.height * 0.35 : MediaQuery.of(context).size.height * 0.45,
                                     child: SmokeAlarmStatus(
                                       smokeLevel: stationState.getStationSmokeLevel(selectedStation),
                                       fireAlarmStatus:
@@ -114,7 +114,7 @@ class _StatistiqueState extends State<Statistique> {
 
 
                                   SizedBox(
-                                    height: MediaQuery.of(context).size.height * 0.5,
+                                    height: maxWidth < 700 ? MediaQuery.of(context).size.height * 0.35 : MediaQuery.of(context).size.height * 0.45,
                                     child: LockerTemperatureMonitor(
                                       temperatures: stationState.getStationTemperatures(selectedStation),
                                     ),
@@ -123,8 +123,8 @@ class _StatistiqueState extends State<Statistique> {
                                   const SizedBox(height: 20),
                                   SizedBox(
                                     height: isMobile
-                                        ? MediaQuery.of(context).size.height * 0.9
-                                        : MediaQuery.of(context).size.height * 0.6,
+                                        ? MediaQuery.of(context).size.height * 0.8
+                                        : MediaQuery.of(context).size.height * 0.5,
                                     child: StationStats(
                                       lockerUsageRates: stationState.getStationLockerUsageRates(selectedStation),
                                       averageUsageTime:
