@@ -18,7 +18,18 @@ class ProfileInformation extends StatefulWidget {
 class _ProfileInformationState extends State<ProfileInformation> with SingleTickerProviderStateMixin {
   bool isEditing = false;
   late TabController _tabController;
-
+  Map<String, List<Map<String, dynamic>>> settingsState = {
+    'Account': [
+      {'title': 'Email me when someone follows me.', 'value': true},
+      {'title': 'Email me when someone answers my post.', 'value': false},
+      {'title': 'Email me when someone mentions me.', 'value': true},
+    ],
+    'Application': [
+      {'title': 'New launches and projects.', 'value': false},
+      {'title': 'Monthly product changes.', 'value': false},
+      {'title': 'Subscribe to the newsletter.', 'value': true},
+    ],
+  };
   Map<String, String> profileFields = {
     'Fullname': 'Omar Hiopil',
     'Mobile phone': '+33 656 64 14 18',
@@ -232,7 +243,6 @@ class _ProfileInformationState extends State<ProfileInformation> with SingleTick
     }
   }
 
-  // Profile Detail View
   Widget _buildProfileDetail(String value, bool isMobile) {
     return Flexible(
       child: Text(
@@ -246,7 +256,6 @@ class _ProfileInformationState extends State<ProfileInformation> with SingleTick
     );
   }
 
-  // Common input decoration style for the editable fields
   InputDecoration _inputDecoration({required String label}) {
     return InputDecoration(
       labelText: label,
@@ -272,39 +281,22 @@ class _ProfileInformationState extends State<ProfileInformation> with SingleTick
     );
   }
 
-  // Settings Tab remains unchanged
   Widget _buildProfileSettingsTab() {
     final isMobile = MediaQuery.of(context).size.width < 600;
 
-    final List<Map<String, dynamic>> settings = [
-      {
-        'section': 'Account',
-        'settings': [
-          {'title': 'Email me when someone follows me.', 'value': true},
-          {'title': 'Email me when someone answers my post.', 'value': false},
-          {'title': 'Email me when someone mentions me.', 'value': true},
-        ]
-      },
-      {
-        'section': 'Application',
-        'settings': [
-          {'title': 'New launches and projects.', 'value': false},
-          {'title': 'Monthly product changes.', 'value': false},
-          {'title': 'Subscribe to the newsletter.', 'value': true},
-        ]
-      },
-    ];
-
     return SingleChildScrollView(
       child: Column(
-        children: settings.map((setting) {
+        children: settingsState.entries.map((entry) {
+          final section = entry.key;
+          final settings = entry.value;
+
           return Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 8.0),
                 child: Text(
-                  setting['section'],
+                  section,
                   style: GoogleFonts.inter(
                     fontWeight: FontWeight.bold,
                     fontSize: 18,
@@ -312,7 +304,7 @@ class _ProfileInformationState extends State<ProfileInformation> with SingleTick
                   ),
                 ),
               ),
-              ...setting['settings'].map<Widget>((settingItem) {
+              ...settings.map<Widget>((settingItem) {
                 return Padding(
                   padding: const EdgeInsets.only(bottom: 12),
                   child: Row(
@@ -325,10 +317,14 @@ class _ProfileInformationState extends State<ProfileInformation> with SingleTick
                           color: Colors.grey[700],
                         ),
                       ),
-                      Spacer(),
+                      const Spacer(),
                       Switch(
                         value: settingItem['value'],
-                        onChanged: (value) {},
+                        onChanged: (value) {
+                          setState(() {
+                            settingItem['value'] = value; // Update state
+                          });
+                        },
                       ),
                     ],
                   ),

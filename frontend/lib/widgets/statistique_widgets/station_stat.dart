@@ -126,7 +126,7 @@ class StationStats extends StatelessWidget {
                 showTitles: true,
                 getTitlesWidget: (value, meta) {
                   return Text(
-                    "Locker ${value.toInt() + 1}",
+                    "casier ${value.toInt() + 1}",
                     style: TextStyle(fontSize: 12, color: Colors.grey.shade600),
                   );
                 },
@@ -190,7 +190,7 @@ class StationStats extends StatelessWidget {
                 showTitles: true,
                 getTitlesWidget: (value, meta) {
                   return Text(
-                    "Time ${value.toInt()}",
+                    "${value.toInt()}",
                     style: TextStyle(fontSize: 12, color: Colors.grey.shade600),
                   );
                 },
