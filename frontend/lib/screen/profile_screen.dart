@@ -1,16 +1,9 @@
 import 'package:fintech_dashboard_clone/widgets/switch_botton.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
 import 'package:fintech_dashboard_clone/layout/app_layout.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fintech_dashboard_clone/widgets/profile_widgets/profile_information.dart';
-import 'package:fintech_dashboard_clone/widgets/profile_widgets/profile_invoices.dart';
-import 'package:fintech_dashboard_clone/widgets/profile_widgets/profile_payment_cards.dart';
-import 'package:fintech_dashboard_clone/widgets/profile_widgets/profile_billing_informations.dart';
-import 'package:fintech_dashboard_clone/widgets/profile_widgets/profile_feedbacks.dart';
 import 'package:google_fonts/google_fonts.dart';
-
 import '../models/enums/navigation_items.dart';
 
 class ProfileScreen extends StatefulWidget {
