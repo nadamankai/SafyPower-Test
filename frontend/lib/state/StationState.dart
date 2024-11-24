@@ -16,9 +16,9 @@ class StationsStates extends ChangeNotifier {
     "Station 2": {
       "smokeLevel": 45,
       "fireAlarmStatus": 5,
-      "temperatures": [22.5, 24.0, 21.8, 23.4, 25.1, 22.9],
-      "lockerUsageRates": [75.0, 60.0, 85.0, 50.0, 65.0, 70.0],
-      "averageUsageTime": [30.0, 35.0, 40.0, 25.0, 20.0, 30.0],
+      "temperatures": [29.5, 10.0, 18.8, 26.4, 25.1, 20.9],
+      "lockerUsageRates": [35.0, 70.0, 25.0, 60.0, 15.0, 50.0],
+      "averageUsageTime": [40.0, 15.0, 30.0, 35.0, 10.0, 40.0],
       "pieChartData": {"used": 10.0, "available": 90.0},
 
     },
@@ -26,8 +26,8 @@ class StationsStates extends ChangeNotifier {
       "smokeLevel": 15,
       "fireAlarmStatus": 5,
       "temperatures": [22.5, 24.0, 21.8, 23.4, 25.1, 22.9],
-      "lockerUsageRates": [75.0, 60.0, 85.0, 50.0, 65.0, 70.0],
-      "averageUsageTime": [30.0, 35.0, 40.0, 25.0, 20.0, 30.0],
+      "lockerUsageRates": [85.0, 20.0, 15.0, 50.0, 45.0, 60.0],
+      "averageUsageTime": [10.0, 35.0, 30.0, 15.0, 40.0, 10.0],
       "pieChartData": {"used": 20.0, "available": 80.0},
 
     },
