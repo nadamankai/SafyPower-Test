@@ -9,6 +9,7 @@
 Ce projet vise à améliorer la WebApp SafyPower en optimisant les performances, en éliminant les redondances de code, et en ajoutant de nouvelles fonctionnalités. Ces améliorations visent à enrichir l’expérience utilisateur, simplifier la maintenance et répondre aux besoins des entreprises clientes.
 
 **Lien Rapport : https://docs.google.com/document/d/1cfT8WF36B10lJl4SIEVyERJSqlJOAndpIkKVACFB8Mw/edit?usp=sharing**
+
 **demo : [https://docs.google.com/document/d/1cfT8WF36B10lJl4SIEVyERJSqlJOAndpIkKVACFB8Mw/edit?usp=sharing](https://drive.google.com/file/d/1McgI1xWxNAzJF-kBzqvq06pA2_I9_OlR/view?usp=sharing)**
 
 ---
